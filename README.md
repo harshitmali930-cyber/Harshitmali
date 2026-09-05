@@ -1,11 +1,17 @@
-# 👋 Hey, I'm Harshit Mali
+<p align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0f2027,50:203a43,100:2c5364&height=220&section=header&text=Harshit%20Mali&fontSize=55&fontColor=ffffff&animation=fadeIn&fontAlignY=35" />
+</p>
 
-### ☁️ Cloud & DevOps Enthusiast | AWS | Linux | Docker | CI/CD
-
-Building, automating & deploying things with Cloud and DevOps 🚀
+<h3 align="center">
+  ☁️ Cloud & DevOps Enthusiast | AWS | Linux | Docker | CI/CD
+</h3>
 
 <p align="center">
-  <img src="https://komarev.com/ghpvc/?username=harshitmali930-cyber&label=Profile%20Views&color=0e75b6&style=for-the-badge" />
+  Building • Automating • Deploying • Learning 🚀
+</p>
+
+<p align="center">
+  <img src="https://komarev.com/ghpvc/?username=harshitmali930-cyber&label=Profile%20Views&style=for-the-badge" />
 </p>
 
 ---
@@ -70,7 +76,7 @@ I'm a B.Tech student passionate about **Cloud Computing, DevOps, and Automation*
 Infrastructure automation, configuration management and DevOps workflow practice.
 
 <a href="https://github.com/harshitmali930-cyber/devops-week6">
-  🔗 View Repository
+🔗 View Repository
 </a>
 
 </td>
@@ -84,7 +90,7 @@ Infrastructure automation, configuration management and DevOps workflow practice
 Hands-on projects focused on cloud infrastructure, automation and deployment.
 
 <a href="https://github.com/harshitmali930-cyber?tab=repositories">
-  🔗 View My Repositories
+🔗 View My Repositories
 </a>
 
 </td>
@@ -146,7 +152,9 @@ Hands-on projects focused on cloud infrastructure, automation and deployment.
 ---
 
 <p align="center">
+  ⭐ Thanks for visiting my profile!
+</p>
 
-⭐ Thanks for visiting my profile!
-
+<p align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0f2027,50:203a43,100:2c5364&height=120&section=footer" />
 </p>
