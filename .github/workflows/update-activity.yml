@@ -16,119 +16,84 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Find latest public activity
+      - name: Get latest public push
         env:
           USERNAME: ${{ github.repository_owner }}
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           curl -L \
             -H "Accept: application/vnd.github+json" \
-            -H "X-GitHub-Api-Version: 2026-03-10" \
+            -H "Authorization: Bearer $TOKEN" \
             "https://api.github.com/users/$USERNAME/events/public?per_page=100" \
             -o events.json
 
-          node <<'EOF'
-          const fs = require("fs");
+      - name: Update activity
+        env:
+          USERNAME: ${{ github.repository_owner }}
+        run: |
+          python3 <<'PY'
+          import json
+          from pathlib import Path
+          from datetime import datetime
 
-          const events = JSON.parse(
-            fs.readFileSync("events.json", "utf8")
-          );
+          events = json.loads(Path("events.json").read_text())
 
-          const push = events.find(
-            e => e.type === "PushEvent"
-          );
+          push = next(
+              (e for e in events if e.get("type") == "PushEvent"),
+              None
+          )
 
-          let activity = "No recent public push activity found.";
-          let date = "—";
-          let repo = "—";
-          let commit = "—";
-          let url = `https://github.com/${process.env.USERNAME}`;
+          if push:
+              repo = push["repo"]["name"]
+              date = datetime.fromisoformat(
+                  push["created_at"].replace("Z", "+00:00")
+              ).astimezone().strftime("%d %B %Y, %I:%M %p")
 
-          if (push) {
-            repo = push.repo.name;
+              commits = push.get("payload", {}).get("commits", [])
+              commit = commits[-1]["message"].split("\n")[0] if commits else "Latest push"
 
-            date = new Date(push.created_at).toLocaleString("en-IN", {
-              day: "2-digit",
-              month: "long",
-              year: "numeric",
-              hour: "2-digit",
-              minute: "2-digit",
-              hour12: true,
-              timeZone: "Asia/Kolkata"
-            });
+              sha = push.get("payload", {}).get("head", "")
+              url = f"https://github.com/{repo}/commit/{sha}" if sha else f"https://github.com/{repo}"
 
-            if (
-              push.payload.commits &&
-              push.payload.commits.length > 0
-            ) {
-              commit =
-                push.payload.commits[
-                  push.payload.commits.length - 1
-                ].message.split("\n")[0];
+              activity = "Public Push / Commit"
+          else:
+              repo = "No recent public push"
+              date = "—"
+              commit = "—"
+              url = f"https://github.com/{USERNAME}"
 
-              url =
-                `https://github.com/${repo}/commit/` +
-                push.payload.head;
-            }
+              activity = "No recent public push activity"
 
-            activity = "Public Push / Commit";
-          }
-
-          const output = `<!-- ACTIVITY_START -->
+          output = f"""<!-- ACTIVITY_START -->
 
           ## 🕐 Latest GitHub Activity
 
-          <table>
-          <tr>
-          <td>🟢 <b>Activity</b></td>
-          <td>${activity}</td>
-          </tr>
-          <tr>
-          <td>📅 <b>Date</b></td>
-          <td>${date}</td>
-          </tr>
-          <tr>
-          <td>📂 <b>Repository</b></td>
-          <td><a href="https://github.com/${repo}">${repo}</a></td>
-          </tr>
-          <tr>
-          <td>📝 <b>Latest Commit</b></td>
-          <td>${commit}</td>
-          </tr>
-          </table>
+          | | Details |
+          |---|---|
+          | 🟢 **Activity** | {activity} |
+          | 📅 **Date** | {date} |
+          | 📂 **Repository** | [{repo}](https://github.com/{repo}) |
+          | 📝 **Latest Commit** | {commit} |
 
           <p align="center">
-            <a href="${url}">
+            <a href="{url}">
               <img src="https://img.shields.io/badge/View%20Latest%20Activity-181717?style=for-the-badge&logo=github" />
             </a>
           </p>
 
-          <!-- ACTIVITY_END -->`;
-
-          fs.writeFileSync(
-            "activity_section.md",
-            output
-          );
-          EOF
-
-      - name: Update README
-        run: |
-          python3 <<'PY'
-          from pathlib import Path
+          <!-- ACTIVITY_END -->"""
 
           readme = Path("README.md").read_text()
-          activity = Path("activity_section.md").read_text().strip()
 
           start = "<!-- ACTIVITY_START -->"
           end = "<!-- ACTIVITY_END -->"
 
-          if start in readme and end in readme:
-              before = readme.split(start)[0]
-              after = readme.split(end, 1)[1]
-              readme = before + activity + after
-          else:
-              readme += "\n\n" + activity + "\n"
+          before = readme.split(start)[0]
+          after = readme.split(end, 1)[1]
 
-          Path("README.md").write_text(readme)
+          Path("README.md").write_text(
+              before + output + after
+          )
           PY
 
       - name: Commit changes
@@ -141,6 +106,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "Update latest GitHub activity"
+            git commit -m "Fix latest GitHub activity"
             git push
           fi
