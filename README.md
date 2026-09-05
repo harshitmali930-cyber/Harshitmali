@@ -143,4 +143,22 @@ Hands-on projects focused on cloud infrastructure, automation and deployment.
   </a>
 </p>
 
+
+---
+
+## 🤝 Connect With Me
+
+<p align="center">
+  <a href="YOUR_LINKEDIN_URL">
+    <img src="https://img.shields.io/badge/LinkedIn-Connect%20with%20me-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" />
+  </a>
+  <a href="https://github.com/harshitmali930-cyber">
+    <img src="https://img.shields.io/badge/GitHub-Profile-181717?style=for-the-badge&logo=github" />
+  </a>
+</p>
+
+<p align="center">
+  💼 Open to Cloud & DevOps opportunities
+</p>
+
 <!-- ACTIVITY_END -->
