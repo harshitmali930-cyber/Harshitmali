@@ -122,10 +122,16 @@ Hands-on projects focused on cloud infrastructure, automation and deployment.
 
 | | Details |
 |---|---|
-| 🟢 **Activity** | Loading latest public activity... |
-| 📅 **Date** | Updating automatically |
-| 📂 **Repository** | — |
-| 📝 **Latest Commit** | — |
+| 🟢 **Activity** | Public Push / Commit |
+| 📅 **Date** | 05 September 2026, 06:34 PM |
+| 📂 **Repository** | [harshitmali930-cyber/Harshitmali](https://github.com/harshitmali930-cyber/Harshitmali) |
+| 📝 **Latest Commit** | Latest push |
+
+<p align="center">
+  <a href="https://github.com/harshitmali930-cyber/Harshitmali/commit/5df1de3d1d81f8b179c16f82667c20c1a715577e">
+    <img src="https://img.shields.io/badge/View%20Latest%20Activity-181717?style=for-the-badge&logo=github" />
+  </a>
+</p>
 
 <!-- ACTIVITY_END -->
 
