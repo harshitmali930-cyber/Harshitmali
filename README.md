@@ -4,6 +4,10 @@
 
 Building, automating & deploying things with Cloud and DevOps 🚀
 
+<p align="center">
+  <img src="https://komarev.com/ghpvc/?username=harshitmali930-cyber&label=Profile%20Views&color=0e75b6&style=for-the-badge" />
+</p>
+
 ---
 
 ## 📊 GitHub Overview
@@ -56,6 +60,7 @@ I'm a B.Tech student passionate about **Cloud Computing, DevOps, and Automation*
 
 <table>
 <tr>
+
 <td width="50%">
 
 ### 🔥 DevOps Week 6
@@ -83,6 +88,7 @@ Hands-on projects focused on cloud infrastructure, automation and deployment.
 </a>
 
 </td>
+
 </tr>
 </table>
 
@@ -92,6 +98,14 @@ Hands-on projects focused on cloud infrastructure, automation and deployment.
 
 <p align="center">
   <img src="https://streak-stats.demolab.com/?user=harshitmali930-cyber&theme=tokyonight&hide_border=true" />
+</p>
+
+---
+
+## 🐍 My Contribution Snake
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/harshitmali930-cyber/Harshitmali/gh-pages/github-contribution-grid-snake.svg" />
 </p>
 
 ---
@@ -120,7 +134,7 @@ Hands-on projects focused on cloud infrastructure, automation and deployment.
 </a>
 
 <a href="https://github.com/harshitmali930-cyber">
-<img src="https://img.shields.io/badge/GitHub-Profile-181717?style=for-the-badge&logo=github&logoColor=white" />
+<img src="https://img.shields.io/badge/GitHub-Profile-181717?style=for-the-badge&logo=github" />
 </a>
 
 </p>
@@ -132,5 +146,7 @@ Hands-on projects focused on cloud infrastructure, automation and deployment.
 ---
 
 <p align="center">
-  ⭐ Thanks for visiting my profile!
+
+⭐ Thanks for visiting my profile!
+
 </p>
