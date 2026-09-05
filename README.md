@@ -51,3 +51,35 @@ I'm a B.Tech student passionate about **Cloud Computing, DevOps, and Automation*
 <p align="center">
   <img src="https://skillicons.dev/icons?i=linux,git,github,bash,python" />
 </p>
+
+---
+
+## 🚀 Featured Projects
+
+<table>
+<tr>
+<td width="50%">
+
+### 🔥 DevOps Week 6
+
+**Ansible + Terraform + Jenkins**
+
+Infrastructure automation, configuration management and DevOps workflow practice.
+
+🔗 [View Repository](https://github.com/harshitmali930-cyber/devops-week6)
+
+</td>
+
+<td width="50%">
+
+### ☁️ Cloud & DevOps Projects
+
+**AWS • Docker • Linux • CI/CD**
+
+Hands-on projects focused on cloud infrastructure, automation and deployment.
+
+🔗 [View My Repositories](https://github.com/harshitmali930-cyber?tab=repositories)
+
+</td>
+</tr>
+</table>
