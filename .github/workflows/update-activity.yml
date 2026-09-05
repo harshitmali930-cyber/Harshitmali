@@ -1,0 +1,43 @@
+name: Update GitHub Activity
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get latest commit
+        run: |
+          git log -1 --pretty=format:"%s" > latest_commit.txt
+          git log -1 --pretty=format:"%ad" --date=format:"%d %B %Y, %I:%M %p" > latest_date.txt
+          git log -1 --pretty=format:"%an" > latest_author.txt
+
+      - name: Create activity file
+        run: |
+          echo "## 🕐 Latest GitHub Activity" > activity.md
+          echo "" >> activity.md
+          echo "📝 **Latest Commit:** $(cat latest_commit.txt)" >> activity.md
+          echo "" >> activity.md
+          echo "📅 **Date:** $(cat latest_date.txt)" >> activity.md
+          echo "" >> activity.md
+          echo "👨‍💻 **Author:** $(cat latest_author.txt)" >> activity.md
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add activity.md latest_commit.txt latest_date.txt latest_author.txt
+          git diff --cached --quiet || git commit -m "Update GitHub activity"
+          git push
