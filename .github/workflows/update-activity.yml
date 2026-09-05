@@ -16,27 +16,36 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Get latest GitHub activity
+      - name: Find latest public activity
         env:
           USERNAME: ${{ github.repository_owner }}
         run: |
-          curl -s "https://api.github.com/users/$USERNAME/events/public?per_page=30" \
+          curl -L \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2026-03-10" \
+            "https://api.github.com/users/$USERNAME/events/public?per_page=100" \
             -o events.json
 
           node <<'EOF'
           const fs = require("fs");
 
-          const events = JSON.parse(fs.readFileSync("events.json", "utf8"));
+          const events = JSON.parse(
+            fs.readFileSync("events.json", "utf8")
+          );
 
-          const push = events.find(e => e.type === "PushEvent");
+          const push = events.find(
+            e => e.type === "PushEvent"
+          );
 
-          let commit = "No recent public commit found";
-          let repo = "—";
+          let activity = "No recent public push activity found.";
           let date = "—";
-          let url = "";
+          let repo = "—";
+          let commit = "—";
+          let url = `https://github.com/${process.env.USERNAME}`;
 
           if (push) {
             repo = push.repo.name;
+
             date = new Date(push.created_at).toLocaleString("en-IN", {
               day: "2-digit",
               month: "long",
@@ -47,12 +56,21 @@ jobs:
               timeZone: "Asia/Kolkata"
             });
 
-            if (push.payload.commits && push.payload.commits.length > 0) {
-              commit = push.payload.commits[push.payload.commits.length - 1].message
-                .split("\n")[0];
+            if (
+              push.payload.commits &&
+              push.payload.commits.length > 0
+            ) {
+              commit =
+                push.payload.commits[
+                  push.payload.commits.length - 1
+                ].message.split("\n")[0];
+
+              url =
+                `https://github.com/${repo}/commit/` +
+                push.payload.head;
             }
 
-            url = `https://github.com/${repo}/commit/${push.payload.head}`;
+            activity = "Public Push / Commit";
           }
 
           const output = `<!-- ACTIVITY_START -->
@@ -61,24 +79,35 @@ jobs:
 
           <table>
           <tr>
-          <td>🟢 <b>Last Activity</b></td>
-          <td>${date}</td>
+          <td>🟢 <b>Activity</b></td>
+          <td>${activity}</td>
           </tr>
           <tr>
-          <td>📝 <b>Latest Commit</b></td>
-          <td>${commit}</td>
+          <td>📅 <b>Date</b></td>
+          <td>${date}</td>
           </tr>
           <tr>
           <td>📂 <b>Repository</b></td>
           <td><a href="https://github.com/${repo}">${repo}</a></td>
           </tr>
+          <tr>
+          <td>📝 <b>Latest Commit</b></td>
+          <td>${commit}</td>
+          </tr>
           </table>
 
-          🔗 <a href="${url}"><b>View Latest Commit →</b></a>
+          <p align="center">
+            <a href="${url}">
+              <img src="https://img.shields.io/badge/View%20Latest%20Activity-181717?style=for-the-badge&logo=github" />
+            </a>
+          </p>
 
           <!-- ACTIVITY_END -->`;
 
-          fs.writeFileSync("activity_section.md", output);
+          fs.writeFileSync(
+            "activity_section.md",
+            output
+          );
           EOF
 
       - name: Update README
