@@ -112,3 +112,27 @@ Hands-on projects focused on cloud infrastructure, automation and deployment.
 </p>
 
 
+
+
+<!-- ACTIVITY_START -->
+
+## 🕐 Latest GitHub Activity
+
+<table>
+<tr>
+<td>🟢 <b>Last Activity</b></td>
+<td>05 September 2026 at 11:24 pm</td>
+</tr>
+<tr>
+<td>📝 <b>Latest Commit</b></td>
+<td>No recent public commit found</td>
+</tr>
+<tr>
+<td>📂 <b>Repository</b></td>
+<td><a href="https://github.com/harshitmali930-cyber/Harshitmali">harshitmali930-cyber/Harshitmali</a></td>
+</tr>
+</table>
+
+🔗 <a href="https://github.com/harshitmali930-cyber/Harshitmali/commit/fc1d37c5af5eac86fc0295d83f451765828e4567"><b>View Latest Commit →</b></a>
+
+<!-- ACTIVITY_END -->
