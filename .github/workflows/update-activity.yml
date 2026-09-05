@@ -13,31 +13,105 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
-      - name: Get latest commit
+      - name: Get latest GitHub activity
+        env:
+          USERNAME: ${{ github.repository_owner }}
         run: |
-          git log -1 --pretty=format:"%s" > latest_commit.txt
-          git log -1 --pretty=format:"%ad" --date=format:"%d %B %Y, %I:%M %p" > latest_date.txt
-          git log -1 --pretty=format:"%an" > latest_author.txt
+          curl -s "https://api.github.com/users/$USERNAME/events/public?per_page=30" \
+            -o events.json
 
-      - name: Create activity file
+          node <<'EOF'
+          const fs = require("fs");
+
+          const events = JSON.parse(fs.readFileSync("events.json", "utf8"));
+
+          const push = events.find(e => e.type === "PushEvent");
+
+          let commit = "No recent public commit found";
+          let repo = "—";
+          let date = "—";
+          let url = "";
+
+          if (push) {
+            repo = push.repo.name;
+            date = new Date(push.created_at).toLocaleString("en-IN", {
+              day: "2-digit",
+              month: "long",
+              year: "numeric",
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: true,
+              timeZone: "Asia/Kolkata"
+            });
+
+            if (push.payload.commits && push.payload.commits.length > 0) {
+              commit = push.payload.commits[push.payload.commits.length - 1].message
+                .split("\n")[0];
+            }
+
+            url = `https://github.com/${repo}/commit/${push.payload.head}`;
+          }
+
+          const output = `<!-- ACTIVITY_START -->
+
+          ## 🕐 Latest GitHub Activity
+
+          <table>
+          <tr>
+          <td>🟢 <b>Last Activity</b></td>
+          <td>${date}</td>
+          </tr>
+          <tr>
+          <td>📝 <b>Latest Commit</b></td>
+          <td>${commit}</td>
+          </tr>
+          <tr>
+          <td>📂 <b>Repository</b></td>
+          <td><a href="https://github.com/${repo}">${repo}</a></td>
+          </tr>
+          </table>
+
+          🔗 <a href="${url}"><b>View Latest Commit →</b></a>
+
+          <!-- ACTIVITY_END -->`;
+
+          fs.writeFileSync("activity_section.md", output);
+          EOF
+
+      - name: Update README
         run: |
-          echo "## 🕐 Latest GitHub Activity" > activity.md
-          echo "" >> activity.md
-          echo "📝 **Latest Commit:** $(cat latest_commit.txt)" >> activity.md
-          echo "" >> activity.md
-          echo "📅 **Date:** $(cat latest_date.txt)" >> activity.md
-          echo "" >> activity.md
-          echo "👨‍💻 **Author:** $(cat latest_author.txt)" >> activity.md
+          python3 <<'PY'
+          from pathlib import Path
+
+          readme = Path("README.md").read_text()
+          activity = Path("activity_section.md").read_text().strip()
+
+          start = "<!-- ACTIVITY_START -->"
+          end = "<!-- ACTIVITY_END -->"
+
+          if start in readme and end in readme:
+              before = readme.split(start)[0]
+              after = readme.split(end, 1)[1]
+              readme = before + activity + after
+          else:
+              readme += "\n\n" + activity + "\n"
+
+          Path("README.md").write_text(readme)
+          PY
 
       - name: Commit changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add activity.md latest_commit.txt latest_date.txt latest_author.txt
-          git diff --cached --quiet || git commit -m "Update GitHub activity"
-          git push
+
+          git add README.md
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Update latest GitHub activity"
+            git push
+          fi
