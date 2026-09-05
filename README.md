@@ -95,3 +95,20 @@ Hands-on projects focused on cloud infrastructure, automation and deployment.
 <p align="center">
   <img src="https://github-readme-activity-graph.vercel.app/graph?username=harshitmali930-cyber&theme=tokyo-night&hide_border=true&area=true" />
 </p>
+
+
+ ---
+
+## 🕐 Latest Activity
+
+<p align="center">
+  <img src="https://github-readme-stats.vercel.app/api?username=harshitmali930-cyber&show_icons=true&hide_title=true&hide_border=true&include_all_commits=true&count_private=true" />
+</p>
+
+<p align="center">
+  <a href="https://github.com/harshitmali930-cyber?tab=overview">
+    <img src="https://img.shields.io/badge/GitHub-View%20My%20Activity-181717?style=for-the-badge&logo=github" />
+  </a>
+</p>
+
+
