@@ -16,3 +16,19 @@ Building, automating & deploying things with Cloud and DevOps 🚀
 <p align="center">
   <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=harshitmali930-cyber&layout=compact&theme=tokyonight&hide_border=true" height="180"/>
 </p>
+
+---
+
+## 🧑‍💻 About Me
+
+I'm a B.Tech student passionate about **Cloud Computing, DevOps, and Automation**.
+
+- ☁️ Exploring **AWS & Cloud Infrastructure**
+- ⚙️ Learning and building with **DevOps tools**
+- 🐳 Working with **Docker & containerization**
+- 🔧 Practicing **Terraform & Ansible**
+- 🚀 Building **CI/CD pipelines with Jenkins**
+- 🐧 Comfortable with **Linux & Git**
+- 📚 Always learning and improving my technical skills
+
+> **"Learn. Build. Automate. Repeat. 🚀"**
