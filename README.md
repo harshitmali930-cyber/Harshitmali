@@ -32,3 +32,22 @@ I'm a B.Tech student passionate about **Cloud Computing, DevOps, and Automation*
 - 📚 Always learning and improving my technical skills
 
 > **"Learn. Build. Automate. Repeat. 🚀"**
+
+---
+
+## 🛠️ Tech Stack
+
+### ☁️ Cloud
+<p align="center">
+  <img src="https://skillicons.dev/icons?i=aws,azure" />
+</p>
+
+### ⚙️ DevOps & Automation
+<p align="center">
+  <img src="https://skillicons.dev/icons?i=docker,kubernetes,terraform,ansible,jenkins" />
+</p>
+
+### 🐧 Development & Tools
+<p align="center">
+  <img src="https://skillicons.dev/icons?i=linux,git,github,bash,python" />
+</p>
