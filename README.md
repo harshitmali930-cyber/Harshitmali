@@ -108,12 +108,12 @@ Hands-on projects focused on cloud infrastructure, automation and deployment.
 
 ---
 
+
 ## 🐍 My Contribution Snake
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/harshitmali930-cyber/Harshitmali/gh-pages/github-contribution-grid-snake.svg" />
 </p>
-
 ---
 
 <!-- ACTIVITY_START -->
