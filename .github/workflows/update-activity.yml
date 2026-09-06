@@ -35,6 +35,7 @@ jobs:
           import json
           from pathlib import Path
           from datetime import datetime
+          from zoneinfo import ZoneInfo
 
           events = json.loads(Path("events.json").read_text())
 
@@ -45,17 +46,31 @@ jobs:
 
           if push:
               repo = push["repo"]["name"]
+
               date = datetime.fromisoformat(
                   push["created_at"].replace("Z", "+00:00")
-              ).astimezone().strftime("%d %B %Y, %I:%M %p")
+              ).astimezone(
+                  ZoneInfo("Asia/Kolkata")
+              ).strftime(
+                  "%d %B %Y, %I:%M %p"
+              )
 
               commits = push.get("payload", {}).get("commits", [])
-              commit = commits[-1]["message"].split("\n")[0] if commits else "Latest push"
+
+              if commits:
+                  commit = commits[-1]["message"].split("\n")[0]
+              else:
+                  commit = "Latest push"
 
               sha = push.get("payload", {}).get("head", "")
-              url = f"https://github.com/{repo}/commit/{sha}" if sha else f"https://github.com/{repo}"
+
+              if sha:
+                  url = f"https://github.com/{repo}/commit/{sha}"
+              else:
+                  url = f"https://github.com/{repo}"
 
               activity = "Public Push / Commit"
+
           else:
               repo = "No recent public push"
               date = "—"
@@ -88,12 +103,16 @@ jobs:
           start = "<!-- ACTIVITY_START -->"
           end = "<!-- ACTIVITY_END -->"
 
-          before = readme.split(start)[0]
-          after = readme.split(end, 1)[1]
+          if start in readme and end in readme:
+              before = readme.split(start)[0]
+              after = readme.split(end, 1)[1]
 
-          Path("README.md").write_text(
-              before + output + after
-          )
+              Path("README.md").write_text(
+                  before + output + after
+              )
+          else:
+              print("Activity markers not found.")
+
           PY
 
       - name: Commit changes
@@ -106,6 +125,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "Fix latest GitHub activity"
+            git commit -m "Update latest GitHub activity"
             git push
           fi
